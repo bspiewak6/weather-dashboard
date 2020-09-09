@@ -18,7 +18,7 @@ As a traveler, the user wants to see the weather outlook for multiple cities so 
 
 
 ## Screenshot
-![Screenshot](.assets/images/06-server-side-apis-homework-demo.png)
+![Screenshot](./assets/images/06-server-side-apis-homework-demo.png)
 
 ## Requirements
 1. The user will utilize the weather dashboard to check out the weather for a particular city of interest. 
