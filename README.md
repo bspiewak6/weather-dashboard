@@ -6,6 +6,7 @@ As a traveler, the user wants to see the weather outlook for multiple cities so 
 * [Technologies](#technologies)
 * [Screenshot](#screenshot)
 * [Requirements](#requirements)
+* [Additional](#additional)
 * [Links](#links)
 
 ## Technologies
@@ -14,7 +15,7 @@ As a traveler, the user wants to see the weather outlook for multiple cities so 
 3. JavaScript
 4. jQuery
 5. Bootstrap
-6. Moment.js
+6. Third-Party OpenWeather API
 
 
 ## Screenshot
@@ -28,6 +29,9 @@ As a traveler, the user wants to see the weather outlook for multiple cities so 
 4. Then, the user has the ability to view future weather conditions for the city they chose and they are shown a 5-day forecast.
     * The 5-day forecast includes the date, an icon representation of weather conditions, temperature and humidity.
 5. Lastly, the user can click on the city in the search history to again be shown the current and future weather conditions for that city.
+
+## Additional
+1. This was the first application that I built using an API. The app retrieves data from a third-party weather API called OpenWeather API. 
 
 
 ## Links
