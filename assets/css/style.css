@@ -1,3 +1,16 @@
-.h1 {
-    font-size: 30px;
+body {
+    font-family: "Segoe UI","Roboto","Helvetica Neue","Arial",sans-serif;
+}
+main {
+    margin-left: 20px;
+}
+
+p.search-header {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+p.forecast-header, p.five-day-header {
+    font-size: 26px;
+    font-weight: bold;
 }

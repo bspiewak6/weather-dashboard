@@ -14,14 +14,17 @@
 <body>
     <!-- add Weather Dashboard navbar -->
     <nav class="navbar navbar-dark bg-dark">
-        <span class="navbar-brand mb-0 h1 w-100 text-center">Weather Dashboard</span>
+        <span class="navbar-brand mb-0 w-100 text-center">
+            <h1>Weather Dashboard</h1>
+        </span>
     </nav>
 
     <!-- container to hold all content -->
-    <div class="container flex-row justify-space-between">
+    <main class="flex-row justify-space-between">
+
         <!-- search for a city-->
         <div class="row">
-            <div class="col-4 bg-light">
+            <div class="col-12 col-md-4 bg-light">
                 <p class="search-header my-1">Search for a city</p>
                 <div class="input-group mb-3">
                 <input class="form-control" type="text" placeholder="Enter city name" aria-label="Enter city name">
@@ -29,32 +32,25 @@
                 </div>
             </div>
         </div>
+        <!-- searched city list -->
+
+
+
         <!-- city forecast -->
         <div class="row">
-            <div class="col-8">
-                <p>City Daily Forecast Goes Here</p>
+            <div class="col-12 col-md-8">
+                <p class="forecast-header my-1">City Daily Forecast Goes Here</p>
             </div>
         </div>
         
-
         <!-- 5-day forecast -->
         <div class="row">
-
+            <div class="col-12 col-md-8">
+                <p class="five-day-header my-1">5-day Forecast: </p>
+            </div>
         </div>
-
-    </div>
+    </main>
         
-
-
-
-
-
-
-
-
-
-
-
 
     <!-- Links to jQuery, Moment.js and my own script.js file -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
