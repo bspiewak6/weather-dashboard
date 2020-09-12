@@ -23,7 +23,7 @@ var formSumbitHandler = function(event) {
     if(city){
         getCityWeather(city);
         
-        cities.unshift({city});
+        // clear out input value 
         cityInputEl.value = "";
     } else {
         alert("Please enter a city name");
@@ -106,11 +106,11 @@ var getUvIndex = function(lat,lon) {
         .then(function(response){
             response.json().then(function(data){
                 displayUvIndex(data);
-                console.log(data);
+                // console.log(data);
             });
         });
-        console.log(lat);
-        console.log(lon);
+        // console.log(lat);
+        // console.log(lon);
 }
 
 var displayUvIndex = function(uv) {
@@ -122,15 +122,30 @@ var displayUvIndex = function(uv) {
     uvIndexValue.innerHTML = uv.value;
 
     if(uv.value <= 2) {
-        uvIndexValue.classList = "success"
+        uvIndexValue.classList = "low";
     } else if(uv.value > 2 && uv.value <= 5) {
-        uvIndexValue.classList = "warning"
-    } else if(uv.value > 5) { 
-        uvIndexValue.classList = "danger"
-    };
-    // console.log(uv.value);
+        uvIndexValue.classList = "moderate";
+    } else if(uv.value > 5 && uv.value <= 7) { 
+        uvIndexValue.classList = "high";
+    } else if(uv.value > 7) { 
+        uvIndexValue.classList = "very-high";
+    }
+    console.log(uv.value);
 
-}
+    uvIndexEl.appendChild(uvIndexValue);
+
+    // append uv index to weather container just like temp, humidity, etc.
+    weatherContainerEl.appendChild(uvIndexEl);
+};
+
+
+// create function and fetch 5 day forecast
+
+// add 5 day forecast for city searched and append to the page 
+
+// save city name in localStorage and add pastSeach function to add city names to searched list
+
+// need to create event listener for pastSearch buttons
 
 
 
@@ -138,9 +153,3 @@ var displayUvIndex = function(uv) {
 cityFormEl.addEventListener("submit", formSumbitHandler);
 
 
-
-
-// full forecast for city searched and append to the page (id = currentCity)
-// 5 day forecast for city searched and append to the page (id = fiveDayForecast)
-
-// only thing we need in localStorage - save city name
