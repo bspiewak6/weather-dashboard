@@ -2,3 +2,6 @@ body {
     font-family: "Avenir","Helvetica","Arial",sans-serif;
 }
 
+#searched-city {
+    text-transform: uppercase;
+}

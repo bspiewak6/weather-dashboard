@@ -11,7 +11,7 @@ var forecastContainerEl = document.querySelector("#fiveday-container");
 var pastSearchButtonEl = document.querySelector("#past-search-buttons");
 
 
-// create function 
+// create function to get weather input from the search form
 // then fetch weather api
 // use the full url to call the API and add inputValue
 // check the response from the API
@@ -29,18 +29,19 @@ var formSumbitHandler = function(event) {
         alert("Please enter a city name");
     }
 }
-// add in fiveDay(city) above;
+// add in fiveDay(city) if statement
 // creat saveSearch() for localStorage
 // pastSearch(city) for cities to show when they've been searched 
 
 var getCityWeather = function(city){
     var apiKey = "4487576f5b4f3e349130b486a36f052e"
-    var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
+    var apiURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey
 
     fetch(apiURL)
     .then(function(response){
         response.json().then(function(data){
             displayWeather(data, city);
+            //console.log(data,city);
         })
     })
 };
@@ -50,9 +51,9 @@ var displayWeather = function(weather, searchCity){
     weatherContainerEl.textContent= "";  
     citySearchInputEl.textContent=searchCity;
 
-    console.log(weather);
+    // console.log(weather);
 
-    // create an element for the date to go 
+    // create an element for the date to go in next to the city that was searched by the user
     var currentDate = document.createElement("span")
     currentDate.textContent=" (" + moment(weather.dt.value).format("L") + ") ";
     citySearchInputEl.appendChild(currentDate);
@@ -70,6 +71,11 @@ var displayWeather = function(weather, searchCity){
     weatherContainerEl.appendChild(temperatureEl);
 
     // ADD FEELS LIKE TEMPERATURE
+    var feelsliketempEl = document.createElement("span");
+    feelsliketempEl.innerHTML = "Feels Like: " + weather.main.feels_like + " &#176F";
+    feelsliketempEl.classList = "list-group-item";
+    // append feels like temp to weather container
+    weatherContainerEl.appendChild(feelsliketempEl);
 
     // create a span element to hold humidity data
     var humidityEl = document.createElement("span");
@@ -85,17 +91,48 @@ var displayWeather = function(weather, searchCity){
     // append wind speed to weather container
     weatherContainerEl.appendChild(windSpeedEl);
 
-    // uv index -- need second API call
-    return fetch(
-        "http://api.openweathermap.org/data/2.5/uvi?appid=4487576f5b4f3e349130b486a36f052e&lat=" + weather.coord.lat + "&lon=" + weather.coord.lon)
-    
-    .then(function(uvFetch) {
-        return uvFetch.json();
-    })
-    .then(function(uvResponse) {
-        console.log(uvResponse);
-    })
+    // uv index = variables for latitude and longitude
+    var lat = weather.coord.lat;
+    var lon = weather.coord.lon;
+    // add in getUvIndex function
+    getUvIndex(lat, lon);
+};
+
+// function for fetching uv index
+var getUvIndex = function(lat,lon) {
+        var apiKey = "4487576f5b4f3e349130b486a36f052e"
+        var apiURL = `http://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`
+        fetch(apiURL)
+        .then(function(response){
+            response.json().then(function(data){
+                displayUvIndex(data);
+                console.log(data);
+            });
+        });
+        console.log(lat);
+        console.log(lon);
 }
+
+var displayUvIndex = function(uv) {
+    var uvIndexEl = document.createElement("div");
+    uvIndexEl.innerHTML = "UV Index: ";
+    uvIndexEl.classList = "list-group-item";
+
+    uvIndexValue = document.createElement("span");
+    uvIndexValue.innerHTML = uv.value;
+
+    if(uv.value <= 2) {
+        uvIndexValue.classList = "success"
+    } else if(uv.value > 2 && uv.value <= 5) {
+        uvIndexValue.classList = "warning"
+    } else if(uv.value > 5) { 
+        uvIndexValue.classList = "danger"
+    };
+    // console.log(uv.value);
+
+}
+
+
 
 
 cityFormEl.addEventListener("submit", formSumbitHandler);
