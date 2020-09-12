@@ -2,12 +2,3 @@ body {
     font-family: "Avenir","Helvetica","Arial",sans-serif;
 }
 
-/* add hide and show for the city search to appear first */
-
-.hide {
-    display: none;
-}
-
-.show {
-    display: block;
-}
