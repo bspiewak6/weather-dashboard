@@ -21,3 +21,7 @@ body {
 .very-high {
     background-color: red;
 }
+
+#forecast {
+    padding-top: 20px;
+}
