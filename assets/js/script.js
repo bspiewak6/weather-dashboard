@@ -133,7 +133,7 @@ var getFiveDay = function(city){
     .then(function(response){
         response.json().then(function(data){
             displayFiveDay(data);
-            console.log(data);
+            // console.log(data);
         })
     })
 };
@@ -144,7 +144,7 @@ var displayFiveDay = function(weather) {
     forecastTitle.textContent = "5-Day Forecast:";
 
     var forecast = weather.list;
-        for(i = 0; forecast.length; i++) {
+        for(i = 5; i < forecast.length; i = i + 8) {
             var weatherForecast = forecast[i];
             console.log(weatherForecast);
         
