@@ -21,16 +21,16 @@ var formSumbitButton = function(event) {
     } else {
         alert("Please enter a correct city");
     }
+
+    saveSearch();
+    pastSearch(city);
+    
 }
 // create function to get weather input from the search form
 // then fetch weather api
 // use the full url to call the API and add inputValue
 // check the response from the API
 // console log response 
-
-
-// create saveSearch function for localStorage
-// pastSearch(city) for cities to show when they've been searched 
 
 var getCityWeather = function(city){
     var apiKey = "4487576f5b4f3e349130b486a36f052e"
@@ -168,27 +168,28 @@ var displayFiveDay = function(weather) {
         
         // date
         var forecastDate = document.createElement("h5");
-        forecastDate.classList = "card-header text-left";
+        forecastDate.classList = "card-header text-center";
         forecastDate.textContent = moment.unix(weatherForecast.dt).format("l"); 
         // append date
         forecastEl.appendChild(forecastDate); 
         
         // weather condition icon
         var weatherIcon = document.createElement("img");
+        weatherIcon.classList = "card-body mx-auto";
         weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${weatherForecast.weather[0].icon}.png`);
         // append icon
         forecastEl.appendChild(weatherIcon);
         
         // temp
         var forecastTemp = document.createElement("span");
-        forecastTemp.classList = "card-body text-left";
+        forecastTemp.classList = "card-body text-center";
         forecastTemp.innerHTML = "Temp: " + (Math.round(weatherForecast.main.temp * 10) / 10) + " &#176F";
         // append temp
         forecastEl.appendChild(forecastTemp);
 
         // humidity
         var forecastHum = document.createElement("span");
-        forecastHum.classList = "card-body text-left";
+        forecastHum.classList = "card-body text-center";
         forecastHum.innerHTML = "Humidity: " + weatherForecast.main.humidity + " %";
         // append humidity
         forecastEl.appendChild(forecastHum);
@@ -201,17 +202,35 @@ var displayFiveDay = function(weather) {
 };
 
 
+// save search in localstorage
+var saveSearch = function() {
+    localStorage.setItem("cities", JSON.stringify(cities));
+};
 
+// add pastSeach function to add city names to searched list under search form
+// create buttons for each previously searched city
+var pastSearch = function(pastSearch) {
 
+   pastSearchEl = document.createElement("button");
+   pastSearchEl.textContent = pastSearch;
+   pastSearchEl.classList = "d-flex w-100 btn-light border p-2";
+   pastSearchEl.setAttribute("data-city", pastSearch);
+   pastSearchEl.setAttribute("type", "submit");
 
+   pastSearchButtonEl.prepend(pastSearchEl);
+}
 
-// save city name in localStorage and add pastSeach function to add city names to searched list
-// var pastSeach = function(pastSeach) {
-//     console.log(pastSearch);
-   
-// }
+// pastSearch button function
+var pastSearchButton = function(event) {
+    var city = event.target.getAttribute("data-city")
+    if(city){
+        getCityWeather(city);
+        getFiveDay(city);
+    }
+}
+
 
 cityFormEl.addEventListener("submit", formSumbitButton);
-// need to create event listener for pastSearch buttons
-
+// create event listener for pastSearch buttons
+pastSearchButtonEl.addEventListener("click", pastSearchButton);
 
