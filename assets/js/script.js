@@ -134,8 +134,8 @@ var getFiveDay = function(city){
         response.json().then(function(data){
             displayFiveDay(data);
             console.log(data);
-        });
-    });
+        })
+    })
 };
 
 // function to display 5-day forecast
@@ -143,14 +143,20 @@ var displayFiveDay = function(weather) {
     forecastContainerEl.textContent = "";
     forecastTitle.textContent = "5-Day Forecast:";
 
+    var forecast = weather.list;
+        for(i = 0; forecast.length; i++) {
+            var weatherForecast = forecast[i];
+            console.log(weatherForecast);
+        
+
+        // create a card for each day
         var forecastEl = document.createElement("div");
         forecastEl.classList = "card bg-primary text-light m-2";
 
-        // create a card for each day
         
         // date
         var forecastDate = document.createElement("h5");
-        forecastDate.textContent = moment(weather.dt).format("L");  
+        forecastDate.textContent = moment.unix(weatherForecast.dt.value).format("L");  
         forecastDate.classList = "card-header text-center";
         
         // append date
@@ -160,8 +166,7 @@ var displayFiveDay = function(weather) {
         // weather condition icon
         // temp
         // humidity
-
-    
+        }
 };
 
 
