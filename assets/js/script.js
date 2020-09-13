@@ -126,7 +126,7 @@ var displayUvIndex = function (uv) {
     } else if (uv.value > 5 && uv.value < 8) {
         uvIndexValue.classList = "high";
     } else if (uv.value > 8) {
-        uvIndexValue.classList = "very-high";
+        uvIndexValue.classList = "severe";
     }
     // console.log(uv.value);
 
@@ -199,7 +199,7 @@ var displayFiveDay = function (weather) {
 };
 
 
-// save search in localstorage
+// save searched cities in localstorage
 var saveSearch = function () {
     localStorage.setItem("cities", JSON.stringify(cities));
 };
