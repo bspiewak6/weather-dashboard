@@ -1,15 +1,14 @@
 // pseudocode
-// global variables (city form, city, current weather, searched city, forecast, five-day-forecast, past search)
-var cities = [];
+// global variables (cities empty, city form, city, current weather, searched city, forecast, five-day-forecast, past search)
+
 var cityFormEl = document.querySelector("#city-search-form");
-var pastSearchButtonEl = document.querySelector("#past-search-buttons");
 var cityInputEl = document.querySelector("#city");
 var weatherContainerEl = document.querySelector("#current-weather-container");
 var citySearchInputEl = document.querySelector("#searched-city");
-var forecastTitle = document.querySelector("#forecast");
+var forecastTitle = document.querySelector("#forecast").style.padding = "20px";
 var forecastContainerEl = document.querySelector("#fiveday-container");
 var pastSearchButtonEl = document.querySelector("#past-search-buttons");
-
+var cities = [];
 
 // create function to get weather input from the search form
 // then fetch weather api
@@ -17,20 +16,9 @@ var pastSearchButtonEl = document.querySelector("#past-search-buttons");
 // check the response from the API
 // console log response 
 
-var formSumbitHandler = function(event) {
-    event.preventDefault();
-    var city = cityInputEl.value.trim();
-    if(city){
-        getCityWeather(city);
-        
-        // clear out input value 
-        cityInputEl.value = "";
-    } else {
-        alert("Please enter a city name");
-    }
-}
-// add in fiveDay(city) if statement
-// creat saveSearch() for localStorage
+
+
+// create saveSearch function for localStorage
 // pastSearch(city) for cities to show when they've been searched 
 
 var getCityWeather = function(city){
@@ -41,7 +29,6 @@ var getCityWeather = function(city){
     .then(function(response){
         response.json().then(function(data){
             displayWeather(data, city);
-            //console.log(data,city);
         })
     })
 };
@@ -65,14 +52,14 @@ var displayWeather = function(weather, searchCity){
 
     // create a span element to hold temperature data
     var temperatureEl = document.createElement("span");
-    temperatureEl.innerHTML = "Temperature: " + weather.main.temp + " &#176F";
+    temperatureEl.innerHTML = "Temperature: " + (Math.round(weather.main.temp * 10) / 10) + " &#176F";
     temperatureEl.classList = "list-group-item";
     // append temperature to weather container
     weatherContainerEl.appendChild(temperatureEl);
 
-    // ADD FEELS LIKE TEMPERATURE
+    // add feels like temperature
     var feelsliketempEl = document.createElement("span");
-    feelsliketempEl.innerHTML = "Feels Like: " + weather.main.feels_like + " &#176F";
+    feelsliketempEl.innerHTML = "Feels Like: " + (Math.round(weather.main.feels_like * 10) / 10) + " &#176F";
     feelsliketempEl.classList = "list-group-item";
     // append feels like temp to weather container
     weatherContainerEl.appendChild(feelsliketempEl);
@@ -106,13 +93,12 @@ var getUvIndex = function(lat,lon) {
         .then(function(response){
             response.json().then(function(data){
                 displayUvIndex(data);
-                // console.log(data);
+            
             });
-        });
-        // console.log(lat);
-        // console.log(lon);
+        }); 
 }
 
+// function for displaying uv index
 var displayUvIndex = function(uv) {
     var uvIndexEl = document.createElement("div");
     uvIndexEl.innerHTML = "UV Index: ";
@@ -125,12 +111,12 @@ var displayUvIndex = function(uv) {
         uvIndexValue.classList = "low";
     } else if(uv.value > 2 && uv.value <= 5) {
         uvIndexValue.classList = "moderate";
-    } else if(uv.value > 5 && uv.value <= 7) { 
+    } else if(uv.value > 5 && uv.value < 8) { 
         uvIndexValue.classList = "high";
-    } else if(uv.value > 7) { 
+    } else if(uv.value > 8) { 
         uvIndexValue.classList = "very-high";
     }
-    console.log(uv.value);
+    // console.log(uv.value);
 
     uvIndexEl.appendChild(uvIndexValue);
 
@@ -138,18 +124,69 @@ var displayUvIndex = function(uv) {
     weatherContainerEl.appendChild(uvIndexEl);
 };
 
+// function to fetch 5-day forecast
+var getFiveDay = function(city){
+    var apiKey = "4487576f5b4f3e349130b486a36f052e"
+    var apiURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey
 
-// create function and fetch 5 day forecast
+    fetch(apiURL)
+    .then(function(response){
+        response.json().then(function(data){
+            displayFiveDay(data);
+            console.log(data);
+        });
+    });
+};
 
-// add 5 day forecast for city searched and append to the page 
+// function to display 5-day forecast
+var displayFiveDay = function(weather) {
+    forecastContainerEl.textContent = "";
+    forecastTitle.textContent = "5-Day Forecast:";
+
+        var forecastEl = document.createElement("div");
+        forecastEl.classList = "card bg-primary text-light m-2";
+
+        // create a card for each day
+        
+        // date
+        var forecastDate = document.createElement("h5");
+        forecastDate.textContent = moment(weather.dt).format("L");  
+        forecastDate.classList = "card-header text-center";
+        
+        // append date
+        forecastEl.appendChild(forecastDate); 
+        
+        
+        // weather condition icon
+        // temp
+        // humidity
+
+    
+};
+
+
+
+
+var formSumbitButton = function(event) {
+    event.preventDefault();
+    var city = cityInputEl.value.trim();
+    if(city){
+        getCityWeather(city);
+        getFiveDay(city);
+        // clear out input value 
+        cityInputEl.value = "";
+    } else {
+        alert("Please type in correct city");
+    }
+}
 
 // save city name in localStorage and add pastSeach function to add city names to searched list
+var pastSeach = function(pastSeach) {
+    console.log(pastSearch);
+   
+}
 
+cityFormEl.addEventListener("submit", formSumbitButton);
 // need to create event listener for pastSearch buttons
-
-
-
-
-cityFormEl.addEventListener("submit", formSumbitHandler);
 
 
