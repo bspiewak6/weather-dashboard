@@ -10,8 +10,9 @@ var forecastContainerEl = document.querySelector("#fiveday-container");
 var pastSearchButtonEl = document.querySelector("#past-search-buttons");
 var cities = [];
 
-var formSumbitButton = function (event) {
+var formSumbitButton = function(event) {
     event.preventDefault();
+    // get value from city search bar
     var city = cityInputEl.value.trim();
     if (city) {
         getCityWeather(city);
@@ -19,7 +20,7 @@ var formSumbitButton = function (event) {
         // clear out input value 
         cityInputEl.value = "";
     } else {
-        alert("Error: " + cityInputEl.value);
+        alert("Please enter correct city name");
     }
 
     saveSearch();
