@@ -19,9 +19,7 @@ var formSumbitButton = function(event) {
         getFiveDay(city);
         // clear out input value 
         cityInputEl.value = "";
-    } else {
-        alert("Please enter correct city name");
-    }
+    } 
 
     saveSearch();
     pastSearch(city);
@@ -37,19 +35,27 @@ var getCityWeather = function (city) {
     var apiURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey
 
     fetch(apiURL)
-        .then(function (response) {
+        .then(function(response) {
             response.json().then(function (data) {
                 displayWeather(data, city);
             })
         })
 };
 
-var displayWeather = function (weather, searchCity) {
+var displayWeather = function(weather, searchCity) {
     // clear all old content
     weatherContainerEl.textContent = "";
     citySearchInputEl.textContent = searchCity;
 
-    // console.log(weather);
+    // tried to create an if/else statement below here that would check to see if the city searched would be a real city
+    // if not, it shows an alert and hides the forecast containers
+    // the alert works but it doesn't hide the container
+    if (weather.cod === 200) {
+        $(citySearchInputEl).show;
+    } else if (weather.cod != 200) {
+        alert("Please enter correct city name");
+        $(forecastContainerEl).hide;
+    }   
 
     // create an element for the date
     var currentDate = document.createElement("span")
@@ -100,19 +106,20 @@ var displayWeather = function (weather, searchCity) {
 };
 
 // create function to fetch uv index
-var getUvIndex = function (lat, lon) {
+var getUvIndex = function(lat, lon) {
     var apiKey = "4487576f5b4f3e349130b486a36f052e"
     var apiURL = `http://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`
     fetch(apiURL)
-        .then(function (response) {
-            response.json().then(function (data) {
-                displayUvIndex(data);
+        .then(function(response) {
+            response.json()
+        .then(function(data) {
+            displayUvIndex(data);
             })
         })
 };
 
 // function for displaying uv index
-var displayUvIndex = function (uv) {
+var displayUvIndex = function(uv) {
     var uvIndexEl = document.createElement("div");
     uvIndexEl.innerHTML = "UV Index: ";
     uvIndexEl.classList = "list-group-item";
@@ -143,7 +150,7 @@ var getFiveDay = function (city) {
     var apiURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey
 
     fetch(apiURL)
-        .then(function (response) {
+        .then(function(response) {
             response.json().then(function (data) {
                 displayFiveDay(data);
                 // console.log(data);
@@ -152,7 +159,7 @@ var getFiveDay = function (city) {
 };
 
 // function to display 5-day forecast
-var displayFiveDay = function (weather) {
+var displayFiveDay = function(weather) {
     forecastContainerEl.textContent = "";
     forecastTitle.textContent = "5-Day Forecast:";
 
@@ -199,15 +206,9 @@ var displayFiveDay = function (weather) {
     }
 };
 
-
-// save searched cities in localstorage
-var saveSearch = function () {
-    localStorage.setItem("cities", JSON.stringify(cities));
-};
-
 // add pastSeach function to add city names to searched list under search form
 // create buttons for each previously searched city
-var pastSearch = function (pastSearch) {
+var pastSearch = function(pastSearch) {
 
     pastSearchEl = document.createElement("button");
     pastSearchEl.textContent = pastSearch;
@@ -219,7 +220,7 @@ var pastSearch = function (pastSearch) {
 };
 
 // pastSearch button function
-var pastSearchButton = function (event) {
+var pastSearchButton = function(event) {
     var city = event.target.getAttribute("data-city")
     if (city) {
         getCityWeather(city);
@@ -227,8 +228,16 @@ var pastSearchButton = function (event) {
     }
 };
 
+// save searched cities in localstorage
+var saveSearch = function() {
+    localStorage.setItem("cities", JSON.stringify(cities));
+};
 
+
+// create event listender for city search button
 cityFormEl.addEventListener("submit", formSumbitButton);
 // create event listener for pastSearch buttons
 pastSearchButtonEl.addEventListener("click", pastSearchButton);
+
+
 

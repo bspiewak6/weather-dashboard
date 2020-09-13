@@ -10,29 +10,29 @@
 </head>
 
 <body>
-    <header class = "bg-info text-white text-center p-3">
+    <header class="bg-info text-white text-center p-3">
         <h1>Weather Dashboard</h1>
     </header>
     <main class="container-fluid">
-        <div class= "row">
+        <div class="row">
             <div class="col-12 col-md-3 p-2 search-column">
-                <form class= "border p-2 bg-light" id= "city-search-form">
+                <form class="border p-2 bg-light" id="city-search-form">
                     <h5>Search for a City</h5>
-                    <input id="city" type= "text" class= "form-input"/>
-                    <button class= "btn-md btn-info" type= "submit"><i class="fas fa-search fa-sm"></i></button>
+                    <input id="city" type="text" class="form-input"/>
+                    <button class="btn-md btn-info" type="submit"><i class="fas fa-search fa-sm"></i></button>
                 </form>
-                <div class= "past-search border" id= "past-search-buttons"></div>
+                <div class="past-search border" id="past-search-buttons"></div>
             </div>
             <div class="col-12 col-md-9">
-                <div class= "row selected-city" id= "current-forecast">
-                    <div class= "col-12">
+                <div class="row selected-city" id="current-forecast">
+                    <div class="col-12">
                         <h2 id="searched-city"></h2>
-                        <div id= "current-weather-container" class= "list-group"></div>
+                        <div id="current-weather-container" class="list-group"></div>
                     </div>  
                 </div>
-                <div class= "row" id= "five-day-forecast">
-                        <h2 class= "col-12" id= "forecast"></h2>
-                        <div class= "d-flex" id= "fiveday-container"></div>
+                <div class="row" id="five-day-forecast">
+                        <h2 class="col-12" id="forecast"></h2>
+                        <div class="d-flex" id="fiveday-container"></div>
                 </div>  
             </div>
         </div>
